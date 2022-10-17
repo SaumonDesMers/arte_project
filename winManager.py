@@ -12,10 +12,11 @@ def initWindow():
 	root.geometry("1600x1200")
 
 	frm = ttk.Frame(root)
-	frm.pack()
 
 	createTopbar()
 	dictUI.create()
+	
+	frm.pack()
 
 
 def nothing():

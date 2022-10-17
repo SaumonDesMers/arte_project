@@ -4,6 +4,7 @@ from tkinter import colorchooser
 import json
 import winManager as wm
 import dict
+import dictUI
 
 def addPlant():
 	plant = {
@@ -27,6 +28,7 @@ def readNewPlantEntry(win, entryStr, plant):
 	win.destroy()
 	print(json.dumps(plant, indent=4))
 	dict.add(plant)
+	dictUI.createItem(plant)
 
 def chooseColor(btn, plantColor):
 	color = colorchooser.askcolor()

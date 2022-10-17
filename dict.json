@@ -1,23 +1,5 @@
 [
     {
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
         "name": "lila",
         "flowering": [
             {
@@ -26,246 +8,30 @@
             }
         ]
     },
-	{
-        "name": "arigbwrb",
+    {
+        "name": "orchidee",
         "flowering": [
             {
-                "color": "#3123f1",
-                "period": "avril"
+                "color": "#d93801",
+                "period": "octobre"
             }
         ]
     },
     {
-        "name": "another plant",
+        "name": "paquerette",
         "flowering": [
             {
-                "color": "#ff7469",
-                "period": "janvier"
+                "color": "#ffffff",
+                "period": "fevrier - juin"
             }
         ]
     },
     {
-        "name": "lila",
+        "name": "rose",
         "flowering": [
             {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
-        ]
-    },
-	{
-        "name": "arigbwrb",
-        "flowering": [
-            {
-                "color": "#3123f1",
-                "period": "avril"
-            }
-        ]
-    },
-    {
-        "name": "another plant",
-        "flowering": [
-            {
-                "color": "#ff7469",
-                "period": "janvier"
-            }
-        ]
-    },
-    {
-        "name": "lila",
-        "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
+                "color": "#eb73d9",
+                "period": "mai"
             }
         ]
     }

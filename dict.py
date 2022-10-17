@@ -13,6 +13,7 @@ def load():
 		open("dict.json", "w").close()
 
 def save():
+	sort()
 	file = open("dict.json", "w")
 	file.write(json.dumps(data, indent=4))
 
@@ -23,3 +24,6 @@ def add(plant):
 def remove(plant):
 	data.remove(plant)
 	save()
+
+def sort():
+	data.sort(key=lambda plant: plant["name"])

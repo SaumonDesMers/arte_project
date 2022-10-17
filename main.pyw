@@ -1,14 +1,11 @@
 from tkinter import *
 from tkinter import ttk
+import json
+import addPlant
+from winManager import initWindow
+import dict
 
-msg = "Hello"
-
-root = Tk()
-frm = ttk.Frame(root, padding=100)
-frm.grid()
-ttk.Label(frm, text=msg).grid(column=0, row=0)
-ttk.Button(frm, text="Quit", command=root.destroy).grid(column=0, row=1)
-root.mainloop()
-
-# if __name__ == "__main__":
-# 	print("Hello World!")
+if __name__ == "__main__":
+	dict.load()
+	initWindow()
+	mainloop()

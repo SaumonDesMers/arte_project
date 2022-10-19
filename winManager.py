@@ -10,6 +10,7 @@ def initWindow():
 	root = Tk()
 	root.title("Arte project")
 	root.geometry("1600x1200")
+	root.tk_setPalette(background="lightgrey")
 
 	frm = ttk.Frame(root)
 

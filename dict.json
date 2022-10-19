@@ -1,10 +1,55 @@
 [
     {
+        "name": "boutton d'or",
+        "flowering": [
+            {
+                "color": "#f1d313",
+                "period": "toute l'annee"
+            }
+        ]
+    },
+    {
+        "name": "coquelicot",
+        "flowering": [
+            {
+                "color": "#ff0e04",
+                "period": "aout"
+            }
+        ]
+    },
+    {
+        "name": "erable",
+        "flowering": [
+            {
+                "color": "#d07320",
+                "period": "janvier - septembre"
+            }
+        ]
+    },
+    {
+        "name": "jonquille",
+        "flowering": [
+            {
+                "color": "#1cd9d9",
+                "period": "avril"
+            }
+        ]
+    },
+    {
         "name": "lila",
         "flowering": [
             {
                 "color": "#ab23ff",
                 "period": "juillet"
+            }
+        ]
+    },
+    {
+        "name": "margueritte",
+        "flowering": [
+            {
+                "color": "#ffffff",
+                "period": "fevrier"
             }
         ]
     },
@@ -32,6 +77,15 @@
             {
                 "color": "#eb73d9",
                 "period": "mai"
+            }
+        ]
+    },
+    {
+        "name": "tulipe",
+        "flowering": [
+            {
+                "color": "#ebe010",
+                "period": "decembre"
             }
         ]
     }

@@ -29,6 +29,7 @@ def readNewPlantEntry(win, entryStr, plant):
 	print(json.dumps(plant, indent=4))
 	dict.add(plant)
 	dictUI.createItem(plant)
+	dictUI.update()
 
 def chooseColor(btn, plantColor):
 	color = colorchooser.askcolor()

@@ -52,7 +52,7 @@ def createItem(plant):
 	itemFrm.pack(fill="x", pady=2)
 
 	# Create the item label
-	name = Label(itemFrm, text=plant["name"])
+	name = Label(itemFrm, text=plant["name"], font=("Helvetica 9 bold"))
 	name.grid(column=0, row=0, columnspan=2, sticky="w")
 
 	period = Label(itemFrm, text=plant["flowering"][0]["period"], width=20, anchor="w")

@@ -1,7 +1,9 @@
+from platform import platform
 from tkinter import *
 from tkinter import ttk
 import winManager as wm
 from PIL import Image, EpsImagePlugin, ImageDraw, ImageTk, ImageFont
+import platform
 
 EpsImagePlugin.gs_windows_binary = r'C:\Program Files\gs\gs10.00.0\bin\gswin64c.exe'
 
@@ -30,6 +32,14 @@ def create():
 	graph["image"] = Image.new("RGB", (graph["width"], graph["height"]))
 	graph["draw"] = ImageDraw.Draw(graph["image"])
 
+	global txtFont
+	fontName = ""
+	if platform.system() == "Windows":
+		fontName = "Arial.ttf"
+	elif platform.system() == "Linux":
+		fontName = "noto-sans/NotoSans-Regular.ttf"
+	txtFont = ImageFont.truetype(fontName, 20)
+	
 	# bind the mouse wheel event
 	# graph["canvas"].bind("<MouseWheel>", mouseWheel)
 
@@ -56,6 +66,12 @@ def update():
 			color = color,
 			name = plant["name"]
 		)
+
+	# draw months name
+	months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+	for i in range(0, 12):
+		month = rotateText(months[i], -90)
+		graph["image"].paste(month, (graph["width"]/2-r-20, graph["height"]/2-r+i*(sep+width)+width/2-month.size[1]/2))
 	
 	# save the image
 	graph["image"].save("graph.png", "PNG")
@@ -64,6 +80,24 @@ def update():
 	tkImg = ImageTk.PhotoImage(graph["image"])
 	graph["canvas"].create_image(0, 0, image=tkImg, anchor="nw")
 
+
+# create text in temporary image and rotate it
+def rotateText(text, angle):
+	# create the temporary image
+	tmpImg = Image.new("RGB", (500, 500))
+	tmpDraw = ImageDraw.Draw(tmpImg)
+
+	# draw the text
+	tmpDraw.text((0, 0), text, fill="black", font=txtFont)
+
+	# rotate the image
+	tmpImg = tmpImg.rotate(angle, expand=1)
+
+	# crop the image
+	tmpImg = tmpImg.crop(tmpImg.getbbox())
+
+	return tmpImg
+
 # draw a raw for each plant
 def drawRaw(draw, x, y, r, width, color, name):
 	arcLen = 20.7
@@ -71,8 +105,7 @@ def drawRaw(draw, x, y, r, width, color, name):
 		start = -90 + i * (arcLen + 2)
 		circular_arc(draw, x, y, r, start, arcLen, width, color[i])
 
-	font = ImageFont.truetype("arial.ttf", 15)
-	draw.text((x-5-font.getlength(text=name), y-r), name, fill="black", font=font)
+	draw.text((x-5-txtFont.getlength(text=name), y-r), name, fill="black", font=txtFont)
 
 # draw a circular arc for each month
 def circular_arc(draw, x, y, r, start, arcLen, width, color):

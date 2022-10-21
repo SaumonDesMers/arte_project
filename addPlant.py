@@ -31,8 +31,8 @@ def readNewPlantEntry(win, entryStr, plant):
 	dictUI.createItem(plant)
 	dictUI.update()
 
-def chooseColor(btn, plantColor):
-	color = colorchooser.askcolor()
+def chooseColor(parentWin, btn, plantColor):
+	color = colorchooser.askcolor(parent=parentWin)
 	btn.config(bg=color[1])
 	plantColor.set(color[1])
 
@@ -51,7 +51,7 @@ def addPlantWindow(entryStr, plant):
 	nameEntry.grid(column=1, row=0, pady=5)
 
 	ttk.Label(frm, text="Color: ").grid(column=0, row=1, pady=5)
-	colorBtn = Button(frm, bg="#ffffff", command= lambda: chooseColor(colorBtn, entryStr["color"]))
+	colorBtn = Button(frm, bg="#ffffff", command= lambda: chooseColor(newPlantWindow, colorBtn, entryStr["color"]))
 	colorBtn.grid(column=1, row=1, pady=5, sticky="we")
 
 	ttk.Label(frm, text="Period: ").grid(column=0, row=2, pady=5)

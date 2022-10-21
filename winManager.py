@@ -1,21 +1,20 @@
 from tkinter import *
 from tkinter import ttk
-import json
-import addPlant
-import dict
 import dictUI
+import graphManager as gm
 
 def initWindow():
 	global root
 	root = Tk()
 	root.title("Arte project")
-	root.geometry("1600x1200")
+	root.geometry("1200x800")
 	root.tk_setPalette(background="lightgrey")
 
 	frm = ttk.Frame(root)
 
 	createTopbar()
 	dictUI.create()
+	gm.create()
 	
 	frm.pack()
 

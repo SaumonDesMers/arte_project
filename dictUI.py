@@ -1,9 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 import winManager as wm
-import json
 import addPlant
 import dict
+import graphManager as gm
 
 def create():
 	frm = ttk.Frame(wm.root, relief="solid", borderwidth=2)
@@ -86,11 +86,13 @@ def createItem(plant):
 # Handle the selection of an item
 def selectItem(event, item):
 	if item["selected"]:
+		gm.removePlant(item["data"])
 		item["frame"].configure(bg="lightgrey")
 		item["name"].configure(bg="lightgrey")
 		item["period"].configure(bg="lightgrey")
 		item["selected"] = False
 	else:
+		gm.addPlant(item["data"])
 		item["frame"].configure(bg="grey")
 		item["name"].configure(bg="grey")
 		item["period"].configure(bg="grey")
@@ -149,10 +151,10 @@ def filterItemList(filterStr, searchStr):
 				hide = True
 		
 		if hide:
-			item["frame"].pack_forget()
+			# item["frame"].pack_forget()
 			item["hidden"] = True
 		else:
-			item["frame"].pack(fill="x")
+			# item["frame"].pack(fill="x", pady=2)
 			item["hidden"] = False
 	update()
 
@@ -166,4 +168,4 @@ def update():
 		item["frame"].pack_forget()
 	for item in itemList:
 		if not item["hidden"]:
-			item["frame"].pack(fill="x")
+			item["frame"].pack(fill="x", pady=2)

@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 import dictUI
-import graphManager as gm
+from graphUI import GraphUI
+from threeQuartersCircularGraph import TQCG
 
 def initWindow():
 	global root
@@ -14,7 +15,10 @@ def initWindow():
 
 	createTopbar()
 	dictUI.create()
-	gm.create()
+	global gm
+	# gm.create()
+	gm = GraphUI()
+	gm.setGraph(TQCG())
 	
 	frm.pack()
 

@@ -3,7 +3,6 @@ from tkinter import ttk
 import winManager as wm
 import addPlant
 import dict
-import graphManager as gm
 
 def create():
 	frm = ttk.Frame(wm.root, relief="solid", borderwidth=2)
@@ -44,7 +43,6 @@ def create():
 	listWidth = listFrm.winfo_width()
 	canvas.configure(width=listWidth)
 
-
 # Create an item
 def createItem(plant):
 	# Create the item frame
@@ -82,22 +80,21 @@ def createItem(plant):
 	period.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 	color.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 
-
 # Handle the selection of an item
 def selectItem(event, item):
 	if item["selected"]:
-		gm.removePlant(item["data"])
+		wm.gm.graph.removePlant(item["data"])
 		item["frame"].configure(bg="lightgrey")
 		item["name"].configure(bg="lightgrey")
 		item["period"].configure(bg="lightgrey")
 		item["selected"] = False
 	else:
-		gm.addPlant(item["data"])
+		wm.gm.graph.addPlant(item["data"])
 		item["frame"].configure(bg="grey")
 		item["name"].configure(bg="grey")
 		item["period"].configure(bg="grey")
 		item["selected"] = True
-
+	wm.gm.graph.update()
 
 # Create the menu
 def createMenu(frm):
@@ -137,7 +134,6 @@ def createMenu(frm):
 	# Create the clear button
 	clearBtn = ttk.Button(searchBtnFrm, text="clear", command=lambda: filterItemList("", ""))
 	clearBtn.pack(side="left")
-
 
 # Filter the item list
 def filterItemList(filterStr, searchStr):

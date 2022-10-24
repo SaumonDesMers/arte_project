@@ -1,6 +1,5 @@
 from tkinter import *
-from tkinter import ttk
-from tkinter import colorchooser
+from tkinter import ttk, colorchooser
 import json
 import winManager as wm
 import dict

@@ -36,6 +36,7 @@ class TQCG(GraphInterface):
 		elif system() == "Linux":
 			fontName = "noto-sans/NotoSans-Regular.ttf"
 		self.txtFont = ImageFont.truetype(fontName, 25)
+		# self.txtFont = ImageFont.load_default()
 
 
 	def update(self):
@@ -95,7 +96,7 @@ class TQCG(GraphInterface):
 
 		# print the plant name
 		self.draw.text(
-			(self.x-5-self.txtFont.getlength(text=name), self.y-r),
+			(self.x-5-self.txtFont.getsize(text=name)[0], self.y-r),
 			name,
 			fill="black",
 			font=self.txtFont

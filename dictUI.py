@@ -51,21 +51,26 @@ def createItem(plant):
 
 	# Create the item label
 	name = Label(itemFrm, text=plant["name"], font=("Helvetica 9 bold"))
-	name.grid(column=0, row=0, columnspan=2, sticky="w")
+	name.grid(column=0, row=0, columnspan=12, sticky="w")
 
-	period = Label(itemFrm, text=plant["flowering"][0]["period"], width=20, anchor="w")
-	period.grid(column=0, row=1)
+	# period = Label(itemFrm, text=plant["flowering"][0]["period"], width=20, anchor="w")
+	# period.grid(column=0, row=1)
 
-	color = Label(itemFrm, background=plant["flowering"][0]["color"], width=5)
-	color.grid(column=1, row=1)
+	# color = Label(itemFrm, background=plant["flowering"][0]["color"], width=5)
+	# color.grid(column=1, row=1)
+
+	# create the colors
+	for i in range(12):
+		color = Label(itemFrm, background=plant["flowering"][0]["color"], width=1)
+		color.grid(column=i, row=1)
 
 	# Create the item object
 	item = {
 		"data": plant,
 		"frame": itemFrm,
 		"name": name,
-		"period": period,
-		"color": color,
+		# "period": period,
+		# "color": color,
 		"selected": False,
 		"hidden": False
 	}
@@ -77,8 +82,8 @@ def createItem(plant):
 	itemFrm.bind("<Leave>", lambda e, itemFrm=itemFrm: itemFrm.configure(relief="raised"))
 	itemFrm.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 	name.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
-	period.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
-	color.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
+	# period.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
+	# color.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 
 # Handle the selection of an item
 def selectItem(event, item):
@@ -86,13 +91,13 @@ def selectItem(event, item):
 		wm.gm.graph.removePlant(item["data"])
 		item["frame"].configure(bg="lightgrey")
 		item["name"].configure(bg="lightgrey")
-		item["period"].configure(bg="lightgrey")
+		# item["period"].configure(bg="lightgrey")
 		item["selected"] = False
 	else:
 		wm.gm.graph.addPlant(item["data"])
 		item["frame"].configure(bg="grey")
 		item["name"].configure(bg="grey")
-		item["period"].configure(bg="grey")
+		# item["period"].configure(bg="grey")
 		item["selected"] = True
 	wm.gm.graph.update()
 

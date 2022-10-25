@@ -4,6 +4,10 @@ import winManager as wm
 import addPlant
 import dict
 
+itemColorDefault = "lightgrey"
+itemColorFocus = "#e5e5e5"
+itemColorSelected = "#c0c0c0"
+
 def create():
 	frm = ttk.Frame(wm.root, relief="solid", borderwidth=2)
 	frm.pack(side="right", fill="y")
@@ -46,31 +50,27 @@ def create():
 # Create an item
 def createItem(plant):
 	# Create the item frame
-	itemFrm = Frame(listFrm, relief="raised", borderwidth=1)
+	itemFrm = Frame(listFrm, relief="raised", borderwidth=1, bg=itemColorDefault)
 	itemFrm.pack(fill="x", pady=2)
 
 	# Create the item label
-	name = Label(itemFrm, text=plant["name"], font=("Helvetica 9 bold"))
+	name = Label(itemFrm, text=plant["name"], font=("Helvetica 9 bold"), bg=itemColorDefault)
 	name.grid(column=0, row=0, columnspan=12, sticky="w")
 
-	# period = Label(itemFrm, text=plant["flowering"][0]["period"], width=20, anchor="w")
-	# period.grid(column=0, row=1)
-
-	# color = Label(itemFrm, background=plant["flowering"][0]["color"], width=5)
-	# color.grid(column=1, row=1)
-
 	# create the colors
+	colors = []
 	for i in range(12):
-		color = Label(itemFrm, background=plant["flowering"][0]["color"], width=1)
-		color.grid(column=i, row=1)
+		color = plant["flowering"][i]
+		lbl = Label(itemFrm, background=color if color != "" else itemColorDefault, width=1)
+		lbl.grid(column=i, row=1)
+		colors.append({"plantColor": color, "widget": lbl})
 
 	# Create the item object
 	item = {
 		"data": plant,
 		"frame": itemFrm,
 		"name": name,
-		# "period": period,
-		# "color": color,
+		"colors": colors,
 		"selected": False,
 		"hidden": False
 	}
@@ -78,28 +78,40 @@ def createItem(plant):
 	itemList.append(item)
 
 	# Bind functions to the item
-	itemFrm.bind("<Enter>", lambda e, itemFrm=itemFrm: itemFrm.configure(relief="sunken"))
-	itemFrm.bind("<Leave>", lambda e, itemFrm=itemFrm: itemFrm.configure(relief="raised"))
+	itemFrm.bind("<Enter>", lambda e: enterBtn(e, item))
+	itemFrm.bind("<Leave>", lambda e: leaveBtn(e, item))
 	itemFrm.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 	name.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 	# period.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
-	# color.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
+	for color in colors:
+		color["widget"].bind("<Button-1>", lambda e, item=item: selectItem(e, item))
 
 # Handle the selection of an item
 def selectItem(event, item):
 	if item["selected"]:
 		wm.gm.graph.removePlant(item["data"])
-		item["frame"].configure(bg="lightgrey")
-		item["name"].configure(bg="lightgrey")
-		# item["period"].configure(bg="lightgrey")
+		item["frame"].configure(relief="raised", borderwidth=1)
 		item["selected"] = False
 	else:
 		wm.gm.graph.addPlant(item["data"])
-		item["frame"].configure(bg="grey")
-		item["name"].configure(bg="grey")
-		# item["period"].configure(bg="grey")
+		item["frame"].configure(relief="sunken", borderwidth=2)
 		item["selected"] = True
 	wm.gm.graph.update()
+
+def enterBtn(e, item):
+	item["frame"].configure(bg=itemColorFocus)
+	item["name"].configure(bg=itemColorFocus)
+	for color in item["colors"]:
+		if color["plantColor"] == "":
+			color["widget"].configure(bg=itemColorFocus)
+
+def leaveBtn(e, item):
+	bgColor = itemColorSelected if item["selected"] else itemColorDefault
+	item["frame"].configure(bg=bgColor)
+	item["name"].configure(bg=bgColor)
+	for color in item["colors"]:
+		if color["plantColor"] == "":
+			color["widget"].configure(bg=bgColor)
 
 # Create the menu
 def createMenu(frm):

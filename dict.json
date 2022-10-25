@@ -2,91 +2,188 @@
     {
         "name": "boutton d'or",
         "flowering": [
-            {
-                "color": "#f1d313",
-                "period": "toute l'annee"
-            }
+            "",
+            "",
+            "",
+            "#f1d313",
+            "#f1d313",
+            "#f1d313",
+            "#f1d313",
+            "#f1d313",
+            "#f1d313",
+            "",
+            "",
+            ""
         ]
     },
     {
         "name": "coquelicot",
         "flowering": [
-            {
-                "color": "#ff0e04",
-                "period": "aout"
-            }
+            "#ff0e04",
+            "#ff0e04",
+            "#ff0e04",
+            "#ff0e04",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "#ff0e04",
+            "#ff0e04"
         ]
     },
     {
         "name": "erable",
         "flowering": [
-            {
-                "color": "#d07320",
-                "period": "janvier - septembre"
-            }
+            "",
+            "",
+            "",
+            "",
+            "",
+            "#d07320",
+            "#d07320",
+            "#d07320",
+            "#d07320",
+            "#d07320",
+            "#d07320",
+            ""
         ]
     },
     {
         "name": "jonquille",
         "flowering": [
-            {
-                "color": "#1cd9d9",
-                "period": "avril"
-            }
+            "",
+            "",
+            "#1cd9d9",
+            "#1cd9d9",
+            "#1cd9d9",
+            "",
+            "",
+            "#1cd9d9",
+            "#1cd9d9",
+            "#1cd9d9",
+            "",
+            ""
         ]
     },
     {
         "name": "lila",
         "flowering": [
-            {
-                "color": "#ab23ff",
-                "period": "juillet"
-            }
+            "",
+            "",
+            "",
+            "",
+            "",
+            "#ab23ff",
+            "#ab23ff",
+            "#ab23ff",
+            "#ab23ff",
+            "",
+            "",
+            ""
         ]
     },
     {
         "name": "margueritte",
         "flowering": [
-            {
-                "color": "#ffffff",
-                "period": "fevrier"
-            }
+            "",
+            "",
+            "",
+            "#ffffff",
+            "#ffffff",
+            "#ffffff",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
         ]
     },
     {
         "name": "orchidee",
         "flowering": [
-            {
-                "color": "#d93801",
-                "period": "octobre"
-            }
+            "#d93801",
+            "#d93801",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "#d93801",
+            "#d93801",
+            "#d93801"
         ]
     },
     {
         "name": "paquerette",
         "flowering": [
-            {
-                "color": "#ffffff",
-                "period": "fevrier - juin"
-            }
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "#ffffff",
+            "#ffffff",
+            "#ffffff",
+            "#ffffff",
+            "#ffffff"
+        ]
+    },
+    {
+        "name": "petunia",
+        "flowering": [
+            "",
+            "",
+            "",
+            "#53396A",
+            "#53396A",
+            "#53396A",
+            "#53396A",
+            "#53396A",
+            "#53396A",
+            "",
+            "",
+            ""
         ]
     },
     {
         "name": "rose",
         "flowering": [
-            {
-                "color": "#eb73d9",
-                "period": "mai"
-            }
+            "",
+            "",
+            "",
+            "",
+            "#eb73d9",
+            "#eb73d9",
+            "#eb73d9",
+            "#eb73d9",
+            "",
+            "",
+            "",
+            ""
         ]
     },
     {
         "name": "tulipe",
         "flowering": [
-            {
-                "color": "#ebe010",
-                "period": "decembre"
-            }
+            "",
+            "",
+            "",
+            "",
+            "#ebe010",
+            "#ebe010",
+            "#ebe010",
+            "#ebe010",
+            "",
+            "",
+            "#ebe010",
+            "#ebe010"
         ]
     }
 ]

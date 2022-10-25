@@ -25,13 +25,12 @@ def readEntry(win, entryStr, plant):
 	plant["name"] = entryStr["name"].get()
 	for i in range(12):
 		color = entryStr["color"][i].get()
-		if re.search(r"#[0-9a-fA-F]{6}", color):
-			plant["flowering"].append(color)
+		plant["flowering"].append(color if re.search(r"#[0-9a-fA-F]{6}", color) else "")
 	win.destroy()
 	print(json.dumps(plant, indent=4))
-	# dict.add(plant)
-	# dictUI.createItem(plant)
-	# dictUI.update()
+	dict.add(plant)
+	dictUI.createItem(plant)
+	dictUI.update()
 
 def addPlantWindow(entryStr, plant):
 	# Create the window

@@ -53,10 +53,9 @@ class TQCG(GraphInterface):
 
 		# draw the raws
 		for i, plant in enumerate(self.data):
-			color = [plant["flowering"][0]["color"]] * 12
 			self.drawRaw(
 				r = self.radius+i*(self.sep+self.arcWidth),
-				color = color,
+				color = plant["flowering"],
 				name = plant["name"]
 			)
 		
@@ -72,9 +71,26 @@ class TQCG(GraphInterface):
 		frm = ttk.Frame(parent)
 
 		# create the background color button
-		ttk.Label(frm, text="Background color:").grid(row=0, column=0, sticky="w")
+		ttk.Label(frm, text="Background:").grid(row=0, column=0, sticky="w")
 		bgColorBtn = Button(frm, bg=self.bgColor, width=5, command=lambda: self.changeBgColor(bgColorBtn))
 		bgColorBtn.grid(row=0, column=1, sticky="w")
+
+		# create the no color button
+		ttk.Label(frm, text="No color:").grid(row=1, column=0, sticky="w")
+		noColorBtn = Button(frm, bg=self.noColor, width=5, command=lambda: self.changeNoColor(noColorBtn))
+		noColorBtn.grid(row=1, column=1, sticky="w")
+
+		# create the scale for the radius
+		ttk.Label(frm, text="Radius:").grid(row=2, column=0, sticky="w")
+		radiusScale = ttk.Scale(frm, from_=100, to=500, orient="horizontal", command=lambda event: self.changeRadius(radiusScale))
+		radiusScale.set(self.radius)
+		radiusScale.grid(row=2, column=1, sticky="w")
+
+		# create the scale for the arc width
+		ttk.Label(frm, text="Arc width:").grid(row=3, column=0, sticky="w")
+		arcWidthScale = ttk.Scale(frm, from_=10, to=50, orient="horizontal", command=lambda event: self.changeArcWidth(arcWidthScale))
+		arcWidthScale.set(self.arcWidth)
+		arcWidthScale.grid(row=3, column=1, sticky="w")
 
 		return frm
 
@@ -87,6 +103,26 @@ class TQCG(GraphInterface):
 		self.update()
 
 
+	def changeNoColor(self, btn):
+		"""Change the no color."""
+		color = colorchooser.askcolor()[1]
+		self.noColor = color
+		btn.config(bg=color)
+		self.update()
+
+
+	def changeRadius(self, scale):
+		"""Change the radius."""
+		self.radius = int(scale.get())
+		self.update()
+
+
+	def changeArcWidth(self, scale):
+		"""Change the arc width."""
+		self.arcWidth = int(scale.get())
+		self.update()
+
+
 	def drawRaw(self, r, color, name):
 		"""Draw a raw for each plant."""
 		# draw the arcs
@@ -95,8 +131,9 @@ class TQCG(GraphInterface):
 			self.drawArc(r, start, color[i])
 
 		# print the plant name
+		w, h = self.draw.textsize(name, font=self.txtFont)
 		self.draw.text(
-			(self.x-5-self.txtFont.getsize(text=name)[0], self.y-r),
+			(self.x-10-w, self.y-r+self.arcWidth/2-h/2),
 			name,
 			fill="black",
 			font=self.txtFont
@@ -109,7 +146,7 @@ class TQCG(GraphInterface):
 			(self.x-r, self.y-r, self.x+r, self.y+r),
 			start,
 			start+self.arcLen,
-			fill=color,
+			fill=color if color != "" else self.noColor,
 			width=self.arcWidth
 		)
 	

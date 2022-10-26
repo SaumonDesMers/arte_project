@@ -10,18 +10,26 @@ class GraphInterface:
 		"""(Interface) Return the graph PIL image."""
 		pass
 
-	def update():
+	def update(self):
 		"""(Interface) Update the graph."""
 		pass
 
-	def createParamMenu(self):
+	def save(self, path):
+		"""(Interface) Save the graph."""
+		pass
+
+	def export(self, path):
+		"""(Interface) Export the graph."""
+		pass
+
+	def createParamMenu(self, parent):
 		"""(Interface) Create the parameter menu"""
 		pass
 	
-	def addPlant(plant):
+	def addPlant(self, plant):
 		"""(Interface) Add a plant to the graph."""
 		pass
 	
-	def removePlant(plant):
+	def removePlant(self, plant):
 		"""(Interface) Remove a plant from the graph."""
 		pass

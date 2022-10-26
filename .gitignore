@@ -3,4 +3,5 @@ dist
 main.spec
 __pycache__
 *.png
+*.svg
 test.py

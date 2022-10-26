@@ -60,7 +60,7 @@ class TQCG(GraphInterface):
 			)
 		
 		# save the current image
-		self.image.save("workingInProgessGraph.png")
+		self.image.save("workInProgessGraph.png")
 
 		# call the update function of the graph manager to update the graph on the screen
 		wm.gm.update()

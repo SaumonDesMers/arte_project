@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter.filedialog import asksaveasfile
 import dictUI
 from graphUI import GraphUI
 from threeQuartersCircularGraph import TQCG
+from TQCG_cairo import TQCG_cairo
 
 def initWindow():
 	global root
@@ -13,12 +15,13 @@ def initWindow():
 
 	frm = ttk.Frame(root)
 
-	createTopbar()
 	dictUI.create()
 	global gm
-	# gm.create()
 	gm = GraphUI()
-	gm.setGraph(TQCG())
+	# gm.setGraph(TQCG())
+	gm.setGraph(TQCG_cairo())
+	
+	createTopbar()
 	
 	frm.pack()
 
@@ -37,6 +40,10 @@ def createTopbar():
 
 	fileMenu.add_command(label="New", command=nothing)
 	fileMenu.add_command(label="Open...", command=nothing)
+	fileMenu.add_separator()
+	fileMenu.add_command(label="Save", command=asksaveasfile)
+	fileMenu.add_command(label="Save as...", command=nothing)
+	fileMenu.add_command(label="Export", command=gm.graph.export)
 	fileMenu.add_separator()
 	fileMenu.add_command(label="Exit", command=root.quit)
 

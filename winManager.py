@@ -41,7 +41,7 @@ def createTopbar():
 	fileMenu.add_command(label="New", command=nothing)
 	fileMenu.add_command(label="Open...", command=nothing)
 	fileMenu.add_separator()
-	fileMenu.add_command(label="Save", command=asksaveasfile)
+	fileMenu.add_command(label="Save", command=chooseFile)
 	fileMenu.add_command(label="Save as...", command=nothing)
 	fileMenu.add_command(label="Export", command=gm.graph.export)
 	fileMenu.add_separator()
@@ -52,3 +52,7 @@ def createTopbar():
 	topbarMenu.add_cascade(label="Help", menu=helpMenu)
 
 	helpMenu.add_command(label="About...", command=nothing)
+
+def chooseFile():
+	file = asksaveasfile()
+	print("file:", file)

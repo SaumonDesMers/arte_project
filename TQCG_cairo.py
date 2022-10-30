@@ -1,9 +1,11 @@
+from distutils import extension
 from pydoc import plain
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 from math import cos, radians, sin
 from platform import system
 from graphInterface import GraphInterface
 from tkinter import StringVar, ttk, colorchooser, Button
+from tkinter.filedialog import asksaveasfile
 import winManager as wm
 import cairo
 
@@ -78,12 +80,22 @@ class TQCG_cairo(GraphInterface):
 		self.surface.write_to_png(path)
 
 	
-	def export(self, path=".svg"):
-		"""Export the graph with the given path and format."""
-		if path.endswith(".png"):
-			self.surface.write_to_png(path)
-		elif path.endswith(".svg"):
+	def export(self):
+		"""Export the graph int the given file and format."""
+		file = asksaveasfile(mode="w", defaultextension=".png", filetypes=[("PNG", "*.png"), ("SVG", "*.svg")])
+		if file.name.endswith(".png"):
+			self.surface.write_to_png(file.name)
+		elif file.name.endswith(".svg"):
 			self.surface.finish()
+			# open new file and write the svg code
+			with open("workInProgress.svg", "r") as svg:
+				file.write(svg.read())
+			# create a new surface
+			self.surface = cairo.SVGSurface("workInProgress.svg", self.width, self.height)
+			self.ctx = cairo.Context(self.surface)
+		else:
+			print("Error: unknown file format")
+		file.close()
 	
 
 	def createParamMenu(self, parent):

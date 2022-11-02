@@ -14,11 +14,19 @@ class GraphInterface:
 		"""(Interface) Update the graph."""
 		pass
 
-	def save(self, path):
+	def save(self):
 		"""(Interface) Save the graph."""
 		pass
 
-	def export(self, path):
+	def open(self):
+		"""(Interface) Open a graph from a file."""
+		pass
+
+	def close(self, force=False):
+		"""(Interface) Close the graph."""
+		pass
+
+	def export(self):
 		"""(Interface) Export the graph."""
 		pass
 

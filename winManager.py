@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter.filedialog import asksaveasfile
 import dictUI
 from graphUI import GraphUI
 from threeQuartersCircularGraph import TQCG
@@ -27,7 +26,7 @@ def initWindow():
 
 
 def nothing():
-	print("Nothing here for now")
+	pass
 
 def createTopbar():
 	# Create the menu bar
@@ -39,9 +38,9 @@ def createTopbar():
 	topbarMenu.add_cascade(label="File", menu=fileMenu, underline=0)
 
 	fileMenu.add_command(label="New", command=nothing)
-	fileMenu.add_command(label="Open...", command=nothing)
+	fileMenu.add_command(label="Open...", command=gm.graph.open)
 	fileMenu.add_separator()
-	fileMenu.add_command(label="Save", command=chooseFile)
+	fileMenu.add_command(label="Save", command=gm.graph.save)
 	fileMenu.add_command(label="Save as...", command=nothing)
 	fileMenu.add_command(label="Export", command=gm.graph.export)
 	fileMenu.add_separator()
@@ -52,7 +51,3 @@ def createTopbar():
 	topbarMenu.add_cascade(label="Help", menu=helpMenu)
 
 	helpMenu.add_command(label="About...", command=nothing)
-
-def chooseFile():
-	file = asksaveasfile()
-	print("file:", file)

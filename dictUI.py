@@ -80,23 +80,32 @@ def createItem(plant):
 	# Bind functions to the item
 	itemFrm.bind("<Enter>", lambda e: enterBtn(e, item))
 	itemFrm.bind("<Leave>", lambda e: leaveBtn(e, item))
-	itemFrm.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
-	name.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
-	# period.bind("<Button-1>", lambda e, item=item: selectItem(e, item))
+	itemFrm.bind("<Button-1>", lambda e, item=item: toggleItem(e, item))
+	name.bind("<Button-1>", lambda e, item=item: toggleItem(e, item))
+	# period.bind("<Button-1>", lambda e, item=item: toggleItem(e, item))
 	for color in colors:
-		color["widget"].bind("<Button-1>", lambda e, item=item: selectItem(e, item))
+		color["widget"].bind("<Button-1>", lambda e, item=item: toggleItem(e, item))
 
 # Handle the selection of an item
-def selectItem(event, item):
+def toggleItem(event, item):
 	if item["selected"]:
 		wm.gm.graph.removePlant(item["data"])
-		item["frame"].configure(relief="raised", borderwidth=1)
-		item["selected"] = False
+		unselectItem(item)
 	else:
 		wm.gm.graph.addPlant(item["data"])
-		item["frame"].configure(relief="sunken", borderwidth=2)
-		item["selected"] = True
+		selectItem(item)
 	wm.gm.graph.update()
+
+
+def selectItem(item):
+	item["frame"].configure(relief="sunken", borderwidth=2)
+	item["selected"] = True
+
+
+def unselectItem(item):
+	item["frame"].configure(relief="raised", borderwidth=1)
+	item["selected"] = False
+
 
 def enterBtn(e, item):
 	item["frame"].configure(bg=itemColorFocus)
@@ -104,6 +113,7 @@ def enterBtn(e, item):
 	for color in item["colors"]:
 		if color["plantColor"] == "":
 			color["widget"].configure(bg=itemColorFocus)
+
 
 def leaveBtn(e, item):
 	bgColor = itemColorSelected if item["selected"] else itemColorDefault
@@ -171,9 +181,11 @@ def filterItemList(filterStr, searchStr):
 			item["hidden"] = False
 	update()
 
+
 def sortItemList():
 	global itemList
 	itemList = sorted(itemList, key=lambda item: item["data"]["name"])
+
 
 def update():
 	sortItemList()
@@ -182,3 +194,11 @@ def update():
 	for item in itemList:
 		if not item["hidden"]:
 			item["frame"].pack(fill="x", pady=2)
+
+
+def updateToMatchOpenedGraph(plantList):
+	for item in itemList:
+		if item["data"] in plantList:
+			selectItem(item)
+		else:
+			unselectItem(item)

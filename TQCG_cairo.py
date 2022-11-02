@@ -1,13 +1,16 @@
-from distutils import extension
-from pydoc import plain
+from ast import Pass
+import json
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 from math import cos, radians, sin
 from platform import system
 from graphInterface import GraphInterface
-from tkinter import StringVar, ttk, colorchooser, Button
-from tkinter.filedialog import asksaveasfile
+from tkinter import StringVar, ttk, colorchooser, Button, Toplevel, Label
+from tkinter.filedialog import asksaveasfile, askopenfile
 import winManager as wm
 import cairo
+import dictUI as dUI
+import re
+import error as err
 
 
 class TQCG_cairo(GraphInterface):
@@ -30,17 +33,22 @@ class TQCG_cairo(GraphInterface):
 		self.radius = 300
 		self.fontSize = 30
 
+		# json file in which the graph is saved
+		self.file = None
+		self.isSaved = True
+
 		# create the cairo svg surface
 		self.surface = cairo.SVGSurface("workInProgress.svg", self.width, self.height)
+
+		# restrict the version
+		self.surface.restrict_to_version(cairo.SVG_VERSION_1_1)
+
+		# create the cairo context
 		self.ctx = cairo.Context(self.surface)
 	
 		# create the font
-		fontName = ""
-		if system() == "Windows":
-			fontName = "Arial"
-		elif system() == "Linux":
-			fontName = "FreeSans"
-		self.txtFont = cairo.ToyFontFace(fontName)
+		self.fontName = ""
+		self.loadDefaultFont()
 	
 
 	def update(self):
@@ -72,17 +80,119 @@ class TQCG_cairo(GraphInterface):
 		# call the update function of the graph manager to update the graph on the screen
 		wm.gm.update()
 
-		pass
+		self.isSaved = False
 
 
-	def save(self, path):
+	def save(self):
 		"""Save the graph."""
-		self.surface.write_to_png(path)
+		if not self.file:
+			self.file = asksaveasfile(mode="w", defaultextension=".json", filetypes=[("JSON", "*.json")])
+		if self.file:
+			metaData = {
+				"data": self.data,
+				"width": self.width,
+				"height": self.height,
+				"bgColor": self.bgColor,
+				"noColor": self.noColor,
+				"arcWidth": self.arcWidth,
+				"arcLen": self.arcLen,
+				"sep": self.sep,
+				"radius": self.radius,
+				"fontSize": self.fontSize,
+				"fontName": self.fontName
+			}
+			self.file.truncate(0)
+			self.file.seek(0)
+			self.file.write(json.dumps(metaData))
+			self.file.flush()
+			self.isSaved = True
+	
+
+	def open(self):
+		"""Open a graph."""
+		print("open")
+		# close the current graph
+		if self.file or (not self.isSaved and len(self.data) > 0):
+			print("1")
+			self.close(func=self.openFile)
+		else:
+			print("2")
+			self.openFile()
+
+
+	def openFile(self):
+		# ask the user the file to open
+		file = askopenfile(mode="r", defaultextension=".json", filetypes=[("JSON", "*.json")])
+		if not file:
+			return
+
+		# load the data
+		metaData = None
+		try:
+			metaDataStr = file.read()
+			# check metadata with regex
+			if not re.match(r"^\{\"data\": \[(\{\"name\": \"[\w ']+\", \"flowering\": \[(\"#?\w*\",? ?){12}\]\},? ?)*\], \"width\": \d+, \"height\": \d+, \"bgColor\": \"#\w+\", \"noColor\": \"#\w+\", \"arcWidth\": \d+, \"arcLen\": \d+.\d+, \"sep\": \d+, \"radius\": \d+, \"fontSize\": \d+, \"fontName\": \"\w+\"\}$", metaDataStr):
+				raise Exception("Invalid JSON")
+			metaData = json.loads(metaDataStr)
+		except Exception as e:
+			err.someErrorOccurred("There was an error while loading the file. The file may be corrupted.")
+			return
+		
+		# open the file which will contain the saved graph
+		self.file = open(file.name, "w")
+
+		# close the file used to open the graph
+		file.close()
+
+		# copy the data
+		self.data = metaData["data"]
+		self.width = metaData["width"]
+		self.height = metaData["height"]
+		self.bgColor = metaData["bgColor"]
+		self.noColor = metaData["noColor"]
+		self.arcWidth = metaData["arcWidth"]
+		self.arcLen = metaData["arcLen"]
+		self.sep = metaData["sep"]
+		self.radius = metaData["radius"]
+		self.fontSize = metaData["fontSize"]
+		self.fontName = metaData["fontName"]
+
+		# update the graph
+		self.update()
+		self.save()
+
+		# update the dictUI
+		dUI.updateToMatchOpenedGraph(self.data)
+
+
+	def close(self, force=False, func=lambda: None):
+		"""Close the graph."""
+		if not self.isSaved and not force:
+			self.graphNotSavedWin(func=func)
+		else:
+			self.file.close()
+			self.file = None
+			if func:
+				func()
+
+
+	def graphNotSavedWin(self, func=lambda: None):
+		"""Open a window to warn the user that the graph is not saved."""
+		win = Toplevel(wm.root)
+		win.title("Warning")
+		win.resizable(False, False)
+
+		Label(win, bg="lightgrey", text="The graph is not saved.").grid(row=0, column=0, columnspan=3, padx=10, pady=10)
+		ttk.Button(win, text="cancel", command=win.destroy).grid(row=1, column=0, padx=10, pady=10)
+		ttk.Button(win, text="close without saving", command=lambda:[self.close(force=True), win.destroy(), func()]).grid(row=1, column=1, padx=10, pady=10)
+		ttk.Button(win, text="save", command=lambda:[self.save(), win.destroy(), func()]).grid(row=1, column=2, padx=10, pady=10)
 
 	
 	def export(self):
 		"""Export the graph int the given file and format."""
 		file = asksaveasfile(mode="w", defaultextension=".png", filetypes=[("PNG", "*.png"), ("SVG", "*.svg")])
+		if not file:
+			return
 		if file.name.endswith(".png"):
 			self.surface.write_to_png(file.name)
 		elif file.name.endswith(".svg"):
@@ -242,3 +352,55 @@ class TQCG_cairo(GraphInterface):
 		"""Convert a hex color to a rgb color."""
 		r, g, b = hexColor[1:3], hexColor[3:5], hexColor[5:7]
 		return (int(r, 16)/mod, int(g, 16)/mod, int(b, 16)/mod)
+
+
+	def loadDefaultFont(self):
+		"""Load the default font."""
+		if system() == "Windows":
+			self.fontName = "Arial"
+		elif system() == "Linux":
+			self.fontName = "FreeSans"
+		self.txtFont = cairo.ToyFontFace(self.fontName)
+
+
+
+
+# open file:
+
+# si aucun fichier n'est ouvert et que le graph est vide
+#    on demande à l'utilisateur de choisir un fichier
+#    si l'utilisateur en choisit un
+#        le fichier est ouvert et devient le fichier courant
+
+# si aucun fichier n'est ouvert et que le graph n'est pas vide
+#    on demande à l'utilisateur si il veut sauvegarder
+#    si l'utilisateur ne veut pas sauvegarder
+#        on demande à l'utilisateur de choisir un fichier
+#        si l'utilisateur en choisit un
+# 			le fichier est ouvert et devient le fichier courant
+#    sinon si l'utilisateur veut sauvegarder
+#        on sauvegarde le fichier courant
+#        on demande à l'utilisateur de choisir un fichier
+#        si l'utilisateur en choisit un
+#            le fichier est ouvert et devient le fichier courant
+#			 on ferme l'ancien fichier courant
+
+# si un fichier est ouvert et que tout est sauvegardé
+#    on demande à l'utilisateur de choisir un fichier
+#    si l'utilisateur en choisit un
+#        le fichier est ouvert et devient le fichier courant
+#		 on ferme l'ancien fichier courant
+
+# si un fichier est ouvert et que tout n'est pas sauvegardé
+#    on demande à l'utilisateur si il veut sauvegarder
+#    si l'utilisateur ne veut pas sauvegarder
+#        on demande à l'utilisateur de choisir un fichier
+#        si l'utilisateur en choisit un
+#            le fichier est ouvert et devient le fichier courant
+#			 on ferme l'ancien fichier courant
+#    sinon si l'utilisateur veut sauvegarder
+#        on sauvegarde le fichier courant
+#        on demande à l'utilisateur de choisir un fichier
+#        si l'utilisateur en choisit un
+#            le fichier est ouvert et devient le fichier courant
+#			 on ferme l'ancien fichier courant
